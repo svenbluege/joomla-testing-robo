@@ -1,5 +1,5 @@
 {
-  "name"       : "joomla-projects/robo",
+  "name"       : "joomla-projects/joomla-testing-robo",
   "description": "Joomla automated testing swiss knife",
   "keywords"   : ["robo", "task", "qa", "tests"],
   "require"    : {
