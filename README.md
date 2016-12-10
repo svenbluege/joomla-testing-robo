@@ -186,7 +186,6 @@ Performs included code tests
 
 Executing parse errors check
 ```
-//
 $this->taskCodeChecks()
     ->setBaseRepositoryPath(<base repository path>)
     ->setParseErrorsCheckFolders(<array of folders to check>)
@@ -196,7 +195,6 @@ $this->taskCodeChecks()
 
 Debug leftovers check
 ```
-// Code checks: debug leftovers
 $this->taskCodeChecks()
     ->setBaseRepositoryPath(<base repository path>)
     ->setDebugLeftoversFolders(<array of folders to check>)
