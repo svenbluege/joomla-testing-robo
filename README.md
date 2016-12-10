@@ -197,20 +197,18 @@ $this->taskCodeChecks()
 Debug leftovers check
 ```
 // Code checks: debug leftovers
-/*		$this->taskCodeChecks()
+$this->taskCodeChecks()
     ->setBaseRepositoryPath(<base repository path>)
     ->setDebugLeftoversFolders(<array of folders to check>)
     ->checkForDebugLeftovers()
-    ->run();*/
+    ->run();
 ```
 
 Code style check
 ```
-/*
 $this->taskCodeChecks()
     ->setBaseRepositoryPath(<base repository path>)
     ->setCodeStyleCheckFolders(<array of folders to check>)
     ->checkCodeStyle()
     ->run();
-*/
 ```
