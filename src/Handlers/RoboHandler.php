@@ -22,7 +22,7 @@ use Robo\Application;
  */
 class RoboHandler extends \Robo\Tasks
 {
-	use FileSystem, Command;
+	use FileSystem, Command, File;
 
 	/**
 	 * @var $this

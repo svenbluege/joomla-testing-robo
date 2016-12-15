@@ -26,83 +26,92 @@ final class CMSSetup extends GenericTask
 	/**
 	 * Human readable name of the task
 	 *
-	 * @var string
+	 * @var    string
 	 *
-	 * @since   1.0.0
+	 * @since  1.0.0
 	 */
 	protected $taskName = 'CMS setup';
 
 	/**
 	 * Repository CMS (Github key)
 	 *
-	 * @var string
+	 * @var    string
 	 *
-	 * @since   1.0.0
+	 * @since  1.0.0
 	 */
 	private $cmsRepository = 'joomla/joomla-cms';
 
 	/**
 	 * Branch to be used to set up the CMS
 	 *
-	 * @var string
+	 * @var    string
 	 *
-	 * @since   1.0.0
+	 * @since  1.0.0
 	 */
 	private $cmsBranch = 'staging';
 
 	/**
 	 * Repository cache time in seconds
 	 *
-	 * @var int
+	 * @var    int
 	 *
-	 * @since   1.0.0
+	 * @since  1.0.0
 	 */
 	private $cmsCacheTime = 86400;
 
 	/**
 	 * Base path where tests are executed
 	 *
-	 * @var string
+	 * @var    string
 	 *
-	 * @since   1.0.0
+	 * @since  1.0.0
 	 */
 	private $baseTestsPath = '';
 
 	/**
 	 * Path for the CMS, under base path
 	 *
-	 * @var string
+	 * @var    string
 	 *
-	 * @since   1.0.0
+	 * @since  1.0.0
 	 */
 	private $cmsPath = 'joomla';
 
 	/**
 	 * Path for cache CMS repository, under base path
 	 *
-	 * @var string
+	 * @var    string
 	 *
-	 * @since   1.0.0
+	 * @since  1.0.0
 	 */
 	private $cachePath = 'cache';
 
 	/**
 	 * Optional user to execute the tasks, for permission purposes
 	 *
-	 * @var string
+	 * @var    string
 	 *
-	 * @since   1.0.0
+	 * @since  1.0.0
 	 */
 	private $executeUser = '';
 
 	/**
 	 * Path to the file containing the extra certificates used by the Joomla certificates file
 	 *
-	 * @var string
+	 * @var    string
 	 *
-	 * @since version
+	 * @since  1.0.0
 	 */
 	private $certificatesPath = '';
+
+	/**
+	 * Root path in the web service for the CMS installation
+	 *
+	 * @var    string
+	 *
+	 * @since  1.0.0
+	 */
+	private $cmsRootFolder = '';
 
 	/**
 	 * Sets the Github repository (owner/repo) with the CMS
@@ -233,6 +242,20 @@ final class CMSSetup extends GenericTask
 	}
 
 	/**
+	 * Sets the root folder of the CMS in the web server
+	 *
+	 * @param   string  $cmsRootFolder  Root folder of the CMS in the web server
+	 *
+	 * @return  $this
+	 */
+	public function setCMSRootFolder($cmsRootFolder)
+	{
+		$this->cmsRootFolder = $cmsRootFolder;
+
+		return $this;
+	}
+
+	/**
 	 * Task for cloning the CMS repository
 	 *
 	 * @return  $this
@@ -305,7 +328,7 @@ final class CMSSetup extends GenericTask
 
 		if (empty($this->baseTestsPath) || !file_exists($this->baseTestsPath) || !is_dir($this->baseTestsPath))
 		{
-			$this->printTaskError('No base path defined for tests');
+			$this->printTaskError('No valid base path defined for tests');
 
 			return false;
 		}
@@ -314,7 +337,7 @@ final class CMSSetup extends GenericTask
 
 		if (empty($this->cachePath))
 		{
-			$this->printTaskError('No base path defined for caching the CMS repository');
+			$this->printTaskError('No valid base path defined for caching the CMS repository');
 
 			return false;
 		}
@@ -358,7 +381,7 @@ final class CMSSetup extends GenericTask
 
 		if (empty($this->baseTestsPath) || !file_exists($this->baseTestsPath) || !is_dir($this->baseTestsPath))
 		{
-			$this->printTaskError('No base path defined for tests');
+			$this->printTaskError('No valid base path defined for tests');
 
 			return false;
 		}
@@ -369,14 +392,14 @@ final class CMSSetup extends GenericTask
 
 		if (empty($this->cmsPath))
 		{
-			$this->printTaskError('No path defined for the CMS');
+			$this->printTaskError('No valid path defined for the CMS');
 
 			return false;
 		}
 
 		if (!file_exists($fullCachePath) || !is_dir($fullCachePath))
 		{
-			$this->printTaskError('No cache path defined for tests');
+			$this->printTaskError('No valid cache path defined for tests');
 
 			return false;
 		}
@@ -478,6 +501,11 @@ final class CMSSetup extends GenericTask
 			$this->printTaskError('htaccess.txt file could not be setup');
 
 			return false;
+		}
+
+		if (!empty($this->cmsRootFolder))
+		{
+			$roboHandler->replaceInFile($fullCMSPath . '/.htaccess', '# RewriteBase /', 'RewriteBase /' . $this->cmsRootFolder);
 		}
 
 		return true;
