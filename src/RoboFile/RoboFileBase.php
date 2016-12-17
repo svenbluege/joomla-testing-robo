@@ -27,6 +27,8 @@ use Joomla\Testing\Robo\Tasks\loadTasks;
  */
 class RoboFileBase extends \Robo\Tasks
 {
+	use ClientContainer;
+
 	// Load tasks from composer, see composer.json
 	use loadTasks;
 
@@ -149,6 +151,57 @@ class RoboFileBase extends \Robo\Tasks
 		// Executes the requested tasks
 		$taskCMSSetup->run()
 			->stopOnFail();
+	}
+
+	/**
+	 * Run the whole test script for this extension
+	 *
+	 * @param   array  $opts  Array of configuration options:
+	 *                        - 'use-htaccess': renames and enable embedded Joomla .htaccess file
+	 *                        - 'env': set a specific environment to get configuration from
+	 *                        - 'append-certificates': path with extra certificates to append
+	 *                        - 'debug': executes codeception tasks with extended debug
+	 *
+	 * @return void
+	 *
+	 * @since   3.7.0
+	 */
+	public function runTests(
+		$opts = [
+		'use-htaccess' => false,
+		'env' => 'desktop',
+		'append-certificates' => '',
+		'debug' => false
+		])
+	{
+		// Removes install suite and test from the preparation script, to execute it with the full script
+		$opts['install-suite'] = '';
+		$opts['install-test'] = '';
+
+		$this->runTestPreparation($opts);
+		$this->runTestSuites($opts);
+
+		$this->killSelenium();
+	}
+
+	/**
+	 * Function for actual execution of the test suites of this extension
+	 *
+	 * @param   array  $opts  Array of configuration options:
+	 *                        - 'env': set a specific environment to get configuration from
+	 *                        - 'debug': executes codeception tasks with extended debug
+	 *
+	 * @return void
+	 *
+	 * @since   3.7.0
+	 */
+	public function runTestSuites(
+		$opts = [
+		'env' => 'desktop',
+		'debug' => false
+		])
+	{
+		// Implementation goes in each specific project
 	}
 
 	/**

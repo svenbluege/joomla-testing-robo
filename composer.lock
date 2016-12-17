@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "e0b1ec2a5f6f1816b532ca5c2b3bdae6",
-    "content-hash": "7da82bef7a4931c512bf209204fff7ee",
+    "hash": "1e102aba030f2585a74d588f4ceb870f",
+    "content-hash": "34708cf7f7580886f71c638ef23b6bb8",
     "packages": [
         {
             "name": "cloudinary/cloudinary_php",
@@ -403,6 +403,55 @@
             ],
             "abandoned": "guzzlehttp/guzzle",
             "time": "2014-01-28 22:29:15"
+        },
+        {
+            "name": "joomla-projects/joomla-testing",
+            "version": "dev-container-test",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/joomla-projects/joomla-testing.git",
+                "reference": "e485b79a1723af480facdc47167bb7556af8594c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/joomla-projects/joomla-testing/zipball/e485b79a1723af480facdc47167bb7556af8594c",
+                "reference": "e485b79a1723af480facdc47167bb7556af8594c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "consolidation/robo": "~1",
+                "joomla-projects/joomla-testing-robo": "~1",
+                "symfony/process": "~3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Joomla\\Testing\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Tito Alvarez",
+                    "email": "tito.alvarez@community.joomla.org"
+                }
+            ],
+            "description": "Joomla automated testing scripts with container capabilities",
+            "keywords": [
+                "containers",
+                "docker",
+                "qa",
+                "robo",
+                "task",
+                "tests"
+            ],
+            "time": "2016-12-17 16:18:26"
         },
         {
             "name": "knplabs/github-api",
@@ -1282,7 +1331,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "joomla-projects/joomla-testing": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

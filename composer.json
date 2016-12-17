@@ -11,18 +11,18 @@
   ],
   "autoload": {
     "psr-4": {
-      "Joomla\\Testing\\Robo\\" : "src/",
-      "Joomla\\Testing\\" : "../joomla-testing/src/"
+      "Joomla\\Testing\\Robo\\" : "src/"
     }
   },
   "require": {
-    "php"                       : ">=5.4.0",
-    "consolidation/robo"        : "~1",
-    "squizlabs/php_codesniffer" : "~1",
-    "cloudinary/cloudinary_php" : "~1",
-    "knplabs/github-api"        : "~1"
+    "php"                             : ">=5.4.0",
+    "consolidation/robo"              : "~1",
+    "squizlabs/php_codesniffer"       : "~1",
+    "cloudinary/cloudinary_php"       : "~1",
+    "knplabs/github-api"              : "~1",
+    "joomla-projects/joomla-testing"  : "dev-container-test"
   },
   "replace": {
-    "joomla-projects/robo"      : "< 1.0"
+    "joomla-projects/robo"            : "< 1.0"
   }
 }
