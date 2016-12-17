@@ -11,7 +11,8 @@
   ],
   "autoload": {
     "psr-4": {
-      "Joomla\\Testing\\Robo\\" : "src/"
+      "Joomla\\Testing\\Robo\\" : "src/",
+      "Joomla\\Testing\\" : "../joomla-testing/src/"
     }
   },
   "require": {

@@ -78,4 +78,16 @@ trait loadTasks
 	{
 		return $this->task(Reporting::class);
 	}
+
+	/**
+	 * Codeception build tasks
+	 *
+	 * @return CodeceptBuild
+	 *
+	 * @since  1.0.0
+	 */
+	protected function taskCodeceptBuild()
+	{
+		return $this->task(CodeceptBuild::class);
+	}
 }
