@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1e102aba030f2585a74d588f4ceb870f",
-    "content-hash": "34708cf7f7580886f71c638ef23b6bb8",
+    "hash": "c03d0204378228a3174b54813b864b6e",
+    "content-hash": "da3fa6b67f13069ccce8a3e645f92a77",
     "packages": [
         {
             "name": "cloudinary/cloudinary_php",
@@ -1330,11 +1330,11 @@
     ],
     "packages-dev": [],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": {
         "joomla-projects/joomla-testing": 20
     },
-    "prefer-stable": false,
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": ">=5.4.0"

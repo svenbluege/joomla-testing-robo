@@ -24,5 +24,7 @@
   },
   "replace": {
     "joomla-projects/robo"            : "< 1.0"
-  }
+  },
+  "minimum-stability"                 : "dev",
+  "prefer-stable"                     : true
 }
