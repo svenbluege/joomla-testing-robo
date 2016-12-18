@@ -25,7 +25,7 @@ use Joomla\Testing\Robo\Tasks\loadTasks;
  *
  * @since       3.7.0
  */
-class RoboFileBase extends \Robo\Tasks
+abstract class RoboFileBase extends \Robo\Tasks implements RoboFileInterface
 {
 	use ClientContainer;
 
@@ -182,40 +182,6 @@ class RoboFileBase extends \Robo\Tasks
 		$this->runTestSuites($opts);
 
 		$this->killSelenium();
-	}
-
-	/**
-	 * Function for actual execution of the test suites of this extension
-	 *
-	 * @param   array  $opts  Array of configuration options:
-	 *                        - 'env': set a specific environment to get configuration from
-	 *                        - 'debug': executes codeception tasks with extended debug
-	 *
-	 * @return void
-	 *
-	 * @since   3.7.0
-	 */
-	public function runTestSuites(
-		$opts = [
-		'env' => 'desktop',
-		'debug' => false
-		])
-	{
-		// Implementation goes in each specific project
-	}
-
-	/**
-	 * Executes the extension packager for this extension
-	 *
-	 * @param   array  $params  Additional parameters
-	 *
-	 * @return  void
-	 *
-	 * @since   3.7.0
-	 */
-	public function prepareTestingPackage($params = ['dev' => false])
-	{
-		// Implementation goes in each specific project
 	}
 
 	/**
