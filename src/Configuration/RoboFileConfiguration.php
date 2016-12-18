@@ -22,7 +22,7 @@ class RoboFileConfiguration extends GenericConfiguration
 	/**
 	 * If set to true, the repo will not be cloned from GitHub and the local copy will be reused.
 	 *
-	 * @var    bool
+	 * @var    boolean
 	 *
 	 * @since  1.0.0
 	 */
@@ -76,10 +76,9 @@ class RoboFileConfiguration extends GenericConfiguration
 	/**
 	 * Use an insecure connections for Curl
 	 *
-	 * @var    bool
+	 * @var    boolean
 	 *
 	 * @since  1.0.0
 	 */
 	protected $insecureConnections = false;
-
 }
