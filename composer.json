@@ -18,7 +18,6 @@
     "php"                             : ">=5.4.0",
     "consolidation/robo"              : "~1",
     "squizlabs/php_codesniffer"       : "~2",
-    "greencape/coding-standards"      : "~1",
     "cloudinary/cloudinary_php"       : "~1",
     "knplabs/github-api"              : "~1",
     "joomla-projects/joomla-testing"  : "dev-container-test"
