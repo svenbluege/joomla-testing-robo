@@ -175,6 +175,7 @@ Performs included code tests
 * **setCodeStyleStandardsBranch($codeStyleStandardsBranch):**  Branch of the coding standards repository to use.  Default: *master* 
 * **setCodeStyleCheckFolders($codeStyleCheckFolders):**  Folders to perform the code style check in. 
 * **setCodeStyleExcludedPaths($codeStyleExcludedPaths):** Array of paths (files/folders/path patterns) to exclude from the code style checking. 
+* **setCodeStyleExtraJoomlaFolder($codeStyleExtraJoomlaFolder):** Include an extra Joomla folder for checking code style (set to false if the cs repository uses a Joomla folder for the standards).
 
 #### Functions
 

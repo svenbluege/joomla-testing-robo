@@ -114,11 +114,20 @@ final class CodeChecks extends GenericTask
 	private $codeStyleExcludedPaths = array();
 
 	/**
+	 * Include an extra Joomla folder for checking code style (set to false if the cs repository uses a Joomla folder for the standards)
+	 *
+	 * @var     boolean
+	 *
+	 * @since   1.0.0
+	 */
+	private $codeStyleExtraJoomlaFolder = true;
+
+	/**
 	 * Set the path of the repository
 	 *
 	 * @param   string  $baseRepositoryPath  Base path of the repository
 	 *
-	 * @return $this
+	 * @return  $this
 	 *
 	 * @since   1.0.0
 	 */
@@ -237,6 +246,8 @@ final class CodeChecks extends GenericTask
 	public function setCodeStyleCheckFolders($codeStyleCheckFolders)
 	{
 		$this->codeStyleCheckFolders = $codeStyleCheckFolders;
+
+		return $this;
 	}
 
 	/**
@@ -251,6 +262,24 @@ final class CodeChecks extends GenericTask
 	public function setCodeStyleExcludedPaths($codeStyleExcludedPaths)
 	{
 		$this->codeStyleExcludedPaths = $codeStyleExcludedPaths;
+
+		return $this;
+	}
+
+	/**
+	 * Include an extra Joomla folder for checking code style (set to false if the cs repository uses a Joomla folder for the standards)
+	 *
+	 * @param   boolean  $codeStyleExtraJoomlaFolder  Set the folder flag on/off
+	 *
+	 * @return  $this
+	 *
+	 * @since   1.0.0
+	 */
+	public function setCodeStyleExtraJoomlaFolder($codeStyleExtraJoomlaFolder)
+	{
+		$this->codeStyleExtraJoomlaFolder = $codeStyleExtraJoomlaFolder;
+
+		return $this;
 	}
 
 	/**
@@ -480,7 +509,8 @@ final class CodeChecks extends GenericTask
 
 			$command = 'git' . $this->getGitExecutableExtension() .
 				' clone -b ' . $this->codeStyleStandardsBranch . ' --single-branch --depth 1 ' .
-				'https://github.com/' . $this->codeStyleStandardsRepo . '.git ' . $this->codeStyleStandardsFolder . '/Joomla';
+				'https://github.com/' . $this->codeStyleStandardsRepo . '.git ' . $this->codeStyleStandardsFolder .
+				($this->codeStyleExtraJoomlaFolder ? '/Joomla' : '');
 
 			if (!$roboHandler->executeCommand($command))
 			{

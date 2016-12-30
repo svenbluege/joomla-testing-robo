@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0842566c5e763ad1cc2ea15008ab8c57",
-    "content-hash": "303a5ab9b47bfa5dd89fcc7682ee1e78",
+    "hash": "16245c115a210e7785b9b9e488e45067",
+    "content-hash": "4579920dafd21571c1f8c255b48e528c",
     "packages": [
         {
             "name": "cloudinary/cloudinary_php",
@@ -310,51 +310,6 @@
             ],
             "description": "Promoting the interoperability of container objects (DIC, SL, etc.)",
             "time": "2014-12-30 15:22:37"
-        },
-        {
-            "name": "greencape/coding-standards",
-            "version": "1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/GreenCape/coding-standards.git",
-                "reference": "2606fb6ec52402972aec99665ab47a7a3b5eb896"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/GreenCape/coding-standards/zipball/2606fb6ec52402972aec99665ab47a7a3b5eb896",
-                "reference": "2606fb6ec52402972aec99665ab47a7a3b5eb896",
-                "shasum": ""
-            },
-            "require": {
-                "squizlabs/php_codesniffer": "~2"
-            },
-            "replace": {
-                "greencape/joomla-cs": "*"
-            },
-            "require-dev": {
-                "codegyre/robo": "^0.6.0",
-                "phpunit/phpunit": "~4.0"
-            },
-            "type": "library",
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Niels Braczek",
-                    "email": "nbraczek@bsds.de",
-                    "role": "lead"
-                }
-            ],
-            "description": "Composer installable Coding Standards Definitions.",
-            "homepage": "https://github.com/GreenCape/coding-standards",
-            "keywords": [
-                "joomla",
-                "phpcs",
-                "standards"
-            ],
-            "time": "2015-11-14 02:57:58"
         },
         {
             "name": "guzzle/guzzle",
