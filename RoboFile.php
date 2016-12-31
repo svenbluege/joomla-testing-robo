@@ -49,7 +49,6 @@ class RoboFile extends \Robo\Tasks
 			->setBaseRepositoryPath(__DIR__)
 			->setCodeStyleStandardsRepo('photodude/coding-standards')
 			->setCodeStyleStandardsBranch('phpcs-2')
-			->setCodeStyleExtraJoomlaFolder(false)
 			->setCodeStyleStandardsFolder($sniffersPath)
 			->setCodeStyleCheckFolders(
 				array(
