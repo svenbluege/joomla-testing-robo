@@ -114,13 +114,14 @@ final class CodeChecks extends GenericTask
 	private $codeStyleExcludedPaths = array();
 
 	/**
-	 * Include an extra Joomla folder for checking code style (set to false if the cs repository uses a Joomla folder for the standards)
+	 * Include an extra folder to name the standard in case the sniff is in the root of the repository.
+	 * Tip: Joomla phpcs v.1 set to true, v.2 set to false (default)
 	 *
 	 * @var     boolean
 	 *
 	 * @since   1.0.0
 	 */
-	private $codeStyleExtraJoomlaFolder = true;
+	private $codeStyleExtraFolder = false;
 
 	/**
 	 * Include the codestyle name.
@@ -130,22 +131,6 @@ final class CodeChecks extends GenericTask
 	 * @since   1.0.0
 	 */
 	private $codeStyleName = 'Joomla';
-
-	/**
-	 * Set the codestyle name. Default = Joomla
-	 *
-	 * @param   string  $codeStyleName  name of the codestyle
-	 *
-	 * @return  $this
-	 *
-	 * @since   1.0.0
-	 */
-	public function setcodeStyleName($codeStyleName)
-	{
-		$this->codeStyleName = $codeStyleName;
-
-		return $this;
-	}
 
 	/**
 	 * Set the path of the repository
@@ -292,17 +277,33 @@ final class CodeChecks extends GenericTask
 	}
 
 	/**
-	 * Include an extra Joomla folder for checking code style (set to false if the cs repository uses a Joomla folder for the standards)
+	 * Include an extra folder to name the standard in case the sniff is not in the root of the repository.
 	 *
-	 * @param   boolean  $codeStyleExtraJoomlaFolder  Set the folder flag on/off
+	 * @param   boolean  $codeStyleExtraFolder  Set the folder flag on/off
 	 *
 	 * @return  $this
 	 *
 	 * @since   1.0.0
 	 */
-	public function setCodeStyleExtraJoomlaFolder($codeStyleExtraJoomlaFolder)
+	public function setCodeStyleExtraFolder($codeStyleExtraFolder)
 	{
-		$this->codeStyleExtraJoomlaFolder = $codeStyleExtraJoomlaFolder;
+		$this->codeStyleExtraFolder = $codeStyleExtraFolder;
+
+		return $this;
+	}
+
+	/**
+	 * Set the codestyle name. Default = Joomla
+	 *
+	 * @param   string  $codeStyleName  name of the codestyle
+	 *
+	 * @return  $this
+	 *
+	 * @since   1.0.0
+	 */
+	public function setcodeStyleName($codeStyleName)
+	{
+		$this->codeStyleName = $codeStyleName;
 
 		return $this;
 	}
@@ -534,7 +535,7 @@ final class CodeChecks extends GenericTask
 			$command = 'git' . $this->getGitExecutableExtension() .
 				' clone -b ' . $this->codeStyleStandardsBranch . ' --single-branch --depth 1 ' .
 				'https://github.com/' . $this->codeStyleStandardsRepo . '.git ' . $this->codeStyleStandardsFolder .
-				($this->codeStyleExtraJoomlaFolder ? '/Joomla' : '');
+				($this->codeStyleExtraFolder ? '/' . $this->codeStyleName : '');
 
 			if (!$roboHandler->executeCommand($command))
 			{
@@ -550,7 +551,7 @@ final class CodeChecks extends GenericTask
 		// Creates the options for the sniffer
 		$codeStyleCheckOptions = array(
 			'files'        => $codeStyleCheckFolders,
-			'standard'     => $this->codeStyleName,
+			'standard'     => array($this->codeStyleName),
 			'showProgress' => true,
 			'verbosity'    => false,
 			'extensions'   => array('php')
