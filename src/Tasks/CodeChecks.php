@@ -123,6 +123,31 @@ final class CodeChecks extends GenericTask
 	private $codeStyleExtraJoomlaFolder = true;
 
 	/**
+	 * Include the codestyle name.
+	 *
+	 * @var     string
+	 *
+	 * @since   1.0.0
+	 */
+	private $codeStyleName = 'Joomla';
+
+	/**
+	 * Set the codestyle name. Default = Joomla
+	 *
+	 * @param   string  $codeStyleName  name of the codestyle
+	 *
+	 * @return  $this
+	 *
+	 * @since   1.0.0
+	 */
+	public function setcodeStyleName($codeStyleName)
+	{
+		$this->codeStyleName = $codeStyleName;
+
+		return $this;
+	}
+
+	/**
 	 * Set the path of the repository
 	 *
 	 * @param   string  $baseRepositoryPath  Base path of the repository
@@ -525,7 +550,7 @@ final class CodeChecks extends GenericTask
 		// Creates the options for the sniffer
 		$codeStyleCheckOptions = array(
 			'files'        => $codeStyleCheckFolders,
-			'standard'     => array('Joomla'),
+			'standard'     => $this->codeStyleName,
 			'showProgress' => true,
 			'verbosity'    => false,
 			'extensions'   => array('php')
