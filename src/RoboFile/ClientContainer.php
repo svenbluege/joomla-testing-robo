@@ -31,10 +31,11 @@ trait ClientContainer
 	 * @since   3.7.0
 	 */
 	public function runContainerTests(
-		$opts = [
-		'env' => 'desktop',
-		'debug' => false
-		])
+		$opts = array(
+			'env' => 'desktop',
+			'debug' => false
+		)
+	)
 	{
 		// Removes install suite and test from the preparation script, to execute it with the full script
 		$opts['install-suite'] = '';
@@ -55,9 +56,10 @@ trait ClientContainer
 	 * @since   3.7.0
 	 */
 	public function runContainerTestPreparation(
-		$opts = [
-		'env' => 'desktop'
-		])
+		$opts = array(
+			'env' => 'desktop'
+		)
+	)
 	{
 		$this->prepareTestingPackage(array('dev' => true));
 		$this->codeceptionBuild();

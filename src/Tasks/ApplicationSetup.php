@@ -95,11 +95,11 @@ final class ApplicationSetup extends GenericTask
 	/**
 	 * Package the application using the specified commands
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0.0
 	 */
-	protected function _packageApplication()
+	protected function packageApplicationExecute()
 	{
 		if (empty($this->packageCommand))
 		{

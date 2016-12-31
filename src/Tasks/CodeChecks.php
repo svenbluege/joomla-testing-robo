@@ -346,11 +346,11 @@ final class CodeChecks extends GenericTask
 	/**
 	 * Task to check for parse errors through the code
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0.0
 	 */
-	protected function _checkForParseErrors()
+	protected function checkForParseErrorsExecute()
 	{
 		$this->printTaskInfo('Checking for parse errors over the code');
 
@@ -411,11 +411,11 @@ final class CodeChecks extends GenericTask
 	/**
 	 * Task to check for debug leftovers (var_dump, console.log, etc)
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0.0
 	 */
-	protected function _checkForDebugLeftovers()
+	protected function checkForDebugLeftoversExecute()
 	{
 		$this->printTaskInfo('Checking for debug leftovers');
 
@@ -483,14 +483,13 @@ final class CodeChecks extends GenericTask
 	/**
 	 * Task to check code style
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0.0
 	 */
-	protected function _checkCodeStyle()
+	protected function checkCodeStyleExecute()
 	{
 		$this->printTaskInfo('Checking for code style standards');
-
 
 		if (empty($this->phpExecutable))
 		{
@@ -549,13 +548,13 @@ final class CodeChecks extends GenericTask
 		$codeStyleCheckFolders = preg_filter('/^/', $this->baseRepositoryPath . '/', $this->codeStyleCheckFolders);
 
 		// Creates the options for the sniffer
-		$codeStyleCheckOptions = [
+		$codeStyleCheckOptions = array(
 			'files'        => $codeStyleCheckFolders,
 			'standard'     => $this->codeStyleName,
 			'showProgress' => true,
 			'verbosity'    => false,
 			'extensions'   => array('php')
-		];
+		);
 
 		// Excludes paths if given
 		if (is_array($this->codeStyleExcludedPaths) && !empty($this->codeStyleExcludedPaths))

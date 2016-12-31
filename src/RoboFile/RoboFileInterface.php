@@ -28,11 +28,11 @@ interface RoboFileInterface
 	 * @since   3.7.0
 	 */
 	public function runTestSuites(
-		$opts = [
-		'env' => 'desktop',
-		'debug' => false
-		]);
-
+		$opts = array(
+			'env' => 'desktop',
+			'debug' => false
+		)
+	);
 	/**
 	 * Executes the extension packager for this extension
 	 *
@@ -42,5 +42,5 @@ interface RoboFileInterface
 	 *
 	 * @since   3.7.0
 	 */
-	public function prepareTestingPackage($params = ['dev' => false]);
+	public function prepareTestingPackage($params = array('dev' => false));
 }

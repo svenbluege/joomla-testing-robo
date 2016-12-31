@@ -26,7 +26,7 @@ abstract class GenericConfiguration extends GenericObject
 	 *
 	 * @param   string  $filePath  Path to the configuration file
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0.0
 	 */

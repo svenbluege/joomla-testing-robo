@@ -80,7 +80,7 @@ abstract class GenericTask extends BaseTask implements TaskInterface
 
 		foreach ($this->tasks as $task)
 		{
-			$taskExec = '_' . $task;
+			$taskExec = $task . 'Execute';
 
 			if (!$this->$taskExec())
 			{
@@ -88,6 +88,6 @@ abstract class GenericTask extends BaseTask implements TaskInterface
 			}
 		}
 
-		return Result::success($this, $this->taskName . ' tasks executed correctly', ['time' => $this->getExecutionTime()]);
+		return Result::success($this, $this->taskName . ' tasks executed correctly', array('time' => $this->getExecutionTime()));
 	}
 }

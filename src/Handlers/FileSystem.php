@@ -24,7 +24,7 @@ trait FileSystem
 	 *
 	 * @param   string  $dir  Directory to delete
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0.0
 	 */
@@ -57,7 +57,7 @@ trait FileSystem
 	 * @param   string  $src   Source directory
 	 * @param   string  $dest  Target directory
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0.0
 	 */
@@ -68,7 +68,11 @@ trait FileSystem
 			return false;
 		}
 
-		$result = $this->taskCopyDir([$src => $dest])
+		$result = $this->taskCopyDir(
+			array(
+				src => $dest
+			)
+		)
 			->run();
 
 		if (0 != $result->getExitCode())
@@ -85,7 +89,7 @@ trait FileSystem
 	 * @param   string  $src   Source file
 	 * @param   string  $dest  Destination file
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0.0
 	 */
@@ -109,7 +113,7 @@ trait FileSystem
 	 * @param   array   $sourceFiles  Array of files to concatenate (in order)
 	 * @param   string  $destFile     Destination file with the combined (concatenated) content of the source files
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0.0
 	 */

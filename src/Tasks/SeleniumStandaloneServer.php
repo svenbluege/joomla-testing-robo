@@ -53,7 +53,7 @@ final class SeleniumStandaloneServer extends GenericTask
 	/**
 	 * Include debug option in the params or not
 	 *
-	 * @var bool
+	 * @var boolean
 	 *
 	 * @since 1.0.0
 	 */
@@ -71,7 +71,7 @@ final class SeleniumStandaloneServer extends GenericTask
 	/**
 	 * Number of seconds to wait for the server to start
 	 *
-	 * @var int
+	 * @var integer
 	 *
 	 * @since 1.0.0
 	 */
@@ -196,11 +196,11 @@ final class SeleniumStandaloneServer extends GenericTask
 	/**
 	 * Start the Selenium Server with the given options
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0.0
 	 */
-	protected function _runSelenium()
+	protected function runSeleniumExecute()
 	{
 		$roboHandler = RoboHandler::getInstance();
 
@@ -231,11 +231,11 @@ final class SeleniumStandaloneServer extends GenericTask
 	/**
 	 * Wait for server to be available
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0.0
 	 */
-	protected function _waitForSelenium()
+	protected function waitForSeleniumExecute()
 	{
 		$this->printTaskInfo('Waiting for Selenium Standalone server to launch');
 		$timeout = 0;
@@ -262,11 +262,11 @@ final class SeleniumStandaloneServer extends GenericTask
 	/**
 	 * Kills the server in execution
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0.0
 	 */
-	protected function _killSelenium()
+	protected function killSeleniumExecute()
 	{
 		$roboHandler = RoboHandler::getInstance();
 		$this->printTaskInfo('Stopping Selenium Server');
@@ -290,7 +290,7 @@ final class SeleniumStandaloneServer extends GenericTask
 	 *
 	 * @param   string  $url  URL to check
 	 *
-	 * @return bool
+	 * @return boolean
 	 *
 	 * @since   1.0.0
 	 */

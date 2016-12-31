@@ -59,7 +59,7 @@ final class CodeceptBuild extends Codecept
 	public function run()
 	{
 		$command = $this->getCommand();
-		$this->printTaskInfo('Executing {command}', ['command' => $command]);
+		$this->printTaskInfo('Executing {command}', array('command' => $command));
 
 		return $this->executeCommand($command);
 	}
