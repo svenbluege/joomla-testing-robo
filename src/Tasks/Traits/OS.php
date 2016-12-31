@@ -46,7 +46,7 @@ trait OS
 	/**
 	 * Checks if local OS is Windows
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0.0
 	 */

@@ -20,10 +20,10 @@ use Joomla\Testing\Robo\Tasks\loadTasks;
 /**
  * Base Robo File for extension testing
  *
- * @package     Weblinks
- * @subpackage  Testing
+ * @package     Joomla\Testing\Robo
+ * @subpackage  RoboFile
  *
- * @since       3.7.0
+ * @since       1.0.0
  */
 abstract class RoboFileBase extends \Robo\Tasks implements RoboFileInterface
 {
@@ -77,14 +77,15 @@ abstract class RoboFileBase extends \Robo\Tasks implements RoboFileInterface
 	 * @since   3.7.0
 	 */
 	public function runTestPreparation(
-		$opts = [
-		'use-htaccess' => false,
-		'env' => 'desktop',
-		'append-certificates' => '',
-		'debug' => false,
-		'install-suite' => 'acceptance',
-		'install-test' => 'install'
-		])
+		$opts = array(
+			'use-htaccess' => false,
+			'env' => 'desktop',
+			'append-certificates' => '',
+			'debug' => false,
+			'install-suite' => 'acceptance',
+			'install-test' => 'install'
+		)
+	)
 	{
 		$this->createTestingSite($opts['use-htaccess'], $opts['append-certificates']);
 		$this->prepareTestingPackage(array('dev' => true));
@@ -167,12 +168,13 @@ abstract class RoboFileBase extends \Robo\Tasks implements RoboFileInterface
 	 * @since   3.7.0
 	 */
 	public function runTests(
-		$opts = [
-		'use-htaccess' => false,
-		'env' => 'desktop',
-		'append-certificates' => '',
-		'debug' => false
-		])
+		$opts = array(
+			'use-htaccess' => false,
+			'env' => 'desktop',
+			'append-certificates' => '',
+			'debug' => false
+		)
+	)
 	{
 		// Removes install suite and test from the preparation script, to execute it with the full script
 		$opts['install-suite'] = '';

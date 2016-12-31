@@ -26,7 +26,7 @@ trait File
 	 * @param   string  $from  Original string
 	 * @param   string  $to    Final string
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0.0
 	 */

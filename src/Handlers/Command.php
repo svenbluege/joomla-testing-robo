@@ -25,7 +25,7 @@ trait Command
 	 * @param   string  $command  Command to execute
 	 * @param   bool    $printed  Output print
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0.0
 	 */
@@ -55,10 +55,10 @@ trait Command
 	 * Executes a certain command and sends back the exit code and stores the message in a referenced variable
 	 *
 	 * @param   string  $command  Command to execute
-	 * @param   string  &$output  Output messages from the execution
+	 * @param   string  $output   Output messages from the execution
 	 * @param   bool    $printed  Output print
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0.0
 	 */
@@ -91,7 +91,7 @@ trait Command
 	 *
 	 * @param   string  $command  Command to execute
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0.0
 	 */

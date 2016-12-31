@@ -76,7 +76,7 @@ final class Reporting extends GenericTask
 	/**
 	 * Github Pull Request number
 	 *
-	 * @var     int
+	 * @var     integer
 	 *
 	 * @since   1.0.0
 	 */
@@ -319,11 +319,11 @@ final class Reporting extends GenericTask
 	/**
 	 * Publishes the reported images to Cloudinary and stores the URLs
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0.0
 	 */
-	protected function _publishCloudinaryImages()
+	protected function publishCloudinaryImagesExecute()
 	{
 		$this->printTaskInfo('Uploading images to Cloudinary');
 
@@ -352,7 +352,7 @@ final class Reporting extends GenericTask
 
 		foreach ($imagesToUpload as $image)
 		{
-			if (!in_array(pathinfo($image, PATHINFO_EXTENSION), ['jpg', 'png']))
+			if (!in_array(pathinfo($image, PATHINFO_EXTENSION), array('jpg', 'png')))
 			{
 				$this->printTaskError('Provided file is not a valid local image path (PNG or JPG are allowed): ' . $image);
 
@@ -367,17 +367,16 @@ final class Reporting extends GenericTask
 			return false;
 		}
 
-
 		\Cloudinary::config(
-			[
+			array(
 				'cloud_name'   => $this->cloudinaryCloudName,
 				'api_key'      => $this->cloudinaryApiKey,
 				'api_secret'   => $this->cloudinaryApiSecret
-			]
+			)
 		);
 
 		// Empties the uploaded images array
-		$this->uploadedImagesURLs = [];
+		$this->uploadedImagesURLs = array();
 
 		foreach ($imagesToUpload as $image)
 		{
@@ -399,11 +398,11 @@ final class Reporting extends GenericTask
 	/**
 	 * Publishes a comment into a Github PR.  It includes the uploaded image, if set and present
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0.0
 	 */
-	protected function _publishGithubCommentToPR()
+	protected function publishGithubCommentToPRExecute()
 	{
 		$this->printTaskInfo('Sending comment to Github PR');
 
@@ -483,7 +482,7 @@ final class Reporting extends GenericTask
 		while (false !== ($file = readdir($handler)))
 		{
 			// Avoid sending system files or html files
-			if (!(in_array(pathinfo($file, PATHINFO_EXTENSION), ['jpg', 'png'])))
+			if (!(in_array(pathinfo($file, PATHINFO_EXTENSION), array('jpg', 'png'))))
 			{
 				continue;
 			}

@@ -53,7 +53,7 @@ final class CMSSetup extends GenericTask
 	/**
 	 * Repository cache time in seconds
 	 *
-	 * @var    int
+	 * @var    integer
 	 *
 	 * @since  1.0.0
 	 */
@@ -318,11 +318,11 @@ final class CMSSetup extends GenericTask
 	/**
 	 * Clones the CMS repository
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0.0
 	 */
-	protected function _cloneCMSRepository()
+	protected function cloneCMSRepositoryExecute()
 	{
 		$this->printTaskInfo('Cloning CMS repository (or validated cache)');
 
@@ -371,11 +371,11 @@ final class CMSSetup extends GenericTask
 	/**
 	 * Task for setting up the CMS path, using the available cache
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0.0
 	 */
-	protected function _setupCMSPath()
+	protected function setupCMSPathExecute()
 	{
 		$this->printTaskInfo('Setting up the CMS in its path');
 
@@ -427,11 +427,11 @@ final class CMSSetup extends GenericTask
 	/**
 	 * Task for fixing permissions when needed
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0.0
 	 */
-	protected function _fixPathPermissions()
+	protected function fixPathPermissionsExecute()
 	{
 		$this->printTaskInfo('Fixing permissions to the CMS path');
 
@@ -469,11 +469,11 @@ final class CMSSetup extends GenericTask
 	/**
 	 * Task for setting up the .htaccess file in the CMS
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0.0
 	 */
-	protected function _setupHtAccess()
+	protected function setupHtAccessExecute()
 	{
 		$this->printTaskInfo('Setting up .htaccess file in CMS folder');
 
@@ -514,11 +514,11 @@ final class CMSSetup extends GenericTask
 	/**
 	 *  Task for appending the certificates to the CMS certificates path
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0.0
 	 */
-	protected function _appendCertificates()
+	protected function appendCertificatesExecute()
 	{
 		$this->printTaskInfo('Appending certificates to default Joomla certificates file');
 
@@ -550,7 +550,7 @@ final class CMSSetup extends GenericTask
 
 		$roboHandler = RoboHandler::getInstance();
 
-		if (!$roboHandler->concatFiles([$cmsCertificatesPath, $this->certificatesPath], $cmsCertificatesPath))
+		if (!$roboHandler->concatFiles(array($cmsCertificatesPath, $this->certificatesPath), $cmsCertificatesPath))
 		{
 			$this->printTaskError('Certificates could not be added to the CMS file');
 
@@ -563,7 +563,7 @@ final class CMSSetup extends GenericTask
 	/**
 	 * Executes the actual git clone command
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   1.0.0
 	 */
