@@ -51,6 +51,15 @@ final class SeleniumStandaloneServer extends GenericTask
 	private $binary = 'vendor/bin/selenium-server-standalone';
 
 	/**
+	 * Webdriver of the selenium standalone server
+	 *
+	 * @var string
+	 *
+	 * @since 1.0.0
+	 */
+	private $webdriver = null;
+
+	/**
 	 * Include debug option in the params or not
 	 *
 	 * @var boolean
@@ -105,6 +114,22 @@ final class SeleniumStandaloneServer extends GenericTask
 	public function setBinary($binary)
 	{
 		$this->binary = $binary;
+
+		return $this;
+	}
+
+	/**
+	 * Set Selenium Webdriver
+	 *
+	 * @param   string  $webdriver  Selenium Standalone Server webdriver
+	 *
+	 * @return  $this
+	 *
+	 * @since   1.0.0
+	 */
+	public function setWebdriver($webdriver)
+	{
+		$this->webdriver = $webdriver;
 
 		return $this;
 	}
@@ -216,6 +241,7 @@ final class SeleniumStandaloneServer extends GenericTask
 
 		$command = $this->binary;
 		$command .= (($this->debug) ? ' -debug' : '');
+		$command .= (!empty($this->webdriver)) ? ' ' . $this->webdriver : '';
 		$command .= (!empty($this->logFile)) ? ' >> ' . $this->logFile . ' 2>&1' : '';
 
 		if (!$roboHandler->executeDaemon($command))
