@@ -372,7 +372,7 @@ final class SeleniumStandaloneServer extends GenericTask
 	/**
 	 * Check if local OS is Windows
 	 *
-	 * @return bool
+	 * @return boolean
 	 * @since  __DEPLOY_VERSION__
 	 */
 	private function isWindows()
