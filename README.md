@@ -16,6 +16,7 @@ Allows executing tasks related to a Selenium Server (not included)
 ####Setters:
 
 * **setBinary($binary):** sets the location of the Selenium Server binary file.  Default: *vendor/bin/selenium-server-standalone*
+* **setWebdriver($webdriver):** sets the webdriver for the Selenium Server.
 * **setURL($url):** sets the URL of the Selenium Server.  Default: *http://localhost:4444*
 * **setDebug($debug = true):** Sets *-debug* option for Selenium server when set to true
 * **setLogFile($logFile):** Defines a single log file for the Selenium server execution.  Default: *selenium.log*
