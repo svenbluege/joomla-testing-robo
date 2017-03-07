@@ -19,7 +19,6 @@ use Joomla\Testing\Robo\Handlers\RoboHandler;
  *
  * @since       1.0.0
  *
- * @todo        Add Windows compatibility
  */
 final class SeleniumStandaloneServer extends GenericTask
 {
@@ -239,10 +238,20 @@ final class SeleniumStandaloneServer extends GenericTask
 			return false;
 		}
 
-		$command = $this->binary;
-		$command .= (($this->debug) ? ' -debug' : '');
-		$command .= (!empty($this->webdriver)) ? ' ' . $this->webdriver : '';
-		$command .= (!empty($this->logFile)) ? ' >> ' . $this->logFile . ' 2>&1' : '';
+		if (!$this->isWindows())
+		{
+			$command = $this->binary;
+			$command .= (($this->debug) ? ' -debug' : '');
+			$command .= (!empty($this->webdriver)) ? ' ' . $this->webdriver : '';
+			$command .= (!empty($this->logFile)) ? ' >> ' . $this->logFile . ' 2>&1' : '';
+		}
+		else
+		{
+			$command = 'START java.exe -jar';
+			$command .= (!empty($this->webdriver)) ? ' ' . $this->webdriver : '';
+			$command .= ' ' . $this->getWindowsPath($this->binary) . '.jar';
+			$command .= (($this->debug) ? ' -debug' : '');
+		}
 
 		if (!$roboHandler->executeDaemon($command))
 		{
@@ -266,18 +275,25 @@ final class SeleniumStandaloneServer extends GenericTask
 		$this->printTaskInfo('Waiting for Selenium Standalone server to launch');
 		$timeout = 0;
 
-		while (!$this->isUrlAvailable($this->url . '/wd/hub'))
+		if (!$this->isWindows())
 		{
-			// If selenium has not started after the given number of seconds then die
-			if ($timeout > $this->timeOut)
+			while (!$this->isUrlAvailable($this->url . '/wd/hub'))
 			{
-				$this->printTaskError('Selenium server execution failed (timeout expired)');
+				// If selenium has not started after the given number of seconds then die
+				if ($timeout > $this->timeOut)
+				{
+					$this->printTaskError('Selenium server execution failed (timeout expired)');
 
-				return false;
+					return false;
+				}
+
+				sleep(1);
+				$timeout++;
 			}
-
-			sleep(1);
-			$timeout++;
+		}
+		else
+		{
+			sleep(10);
 		}
 
 		$this->printTaskSuccess('Selenium server is executing correctly');
@@ -294,14 +310,24 @@ final class SeleniumStandaloneServer extends GenericTask
 	 */
 	protected function killSeleniumExecute()
 	{
+
 		$roboHandler = RoboHandler::getInstance();
 		$this->printTaskInfo('Stopping Selenium Server');
 
-		$command = 'curl ' . $this->url . '/selenium-server/driver/?cmd=shutDownSeleniumServer';
-
-		if ($roboHandler->executeCommand($command))
+		if (!$this->isWindows())
 		{
-			$this->printTaskSuccess('Selenium stopped successfully');
+			$command = 'curl ' . $this->url . '/selenium-server/driver/?cmd=shutDownSeleniumServer';
+
+			if ($roboHandler->executeCommand($command))
+			{
+				$this->printTaskSuccess('Selenium stopped successfully');
+
+				return true;
+			}
+		}
+		else
+		{
+			$this->printTaskSuccess('Killing Selenium is not available yet on Windows.');
 
 			return true;
 		}
@@ -323,13 +349,47 @@ final class SeleniumStandaloneServer extends GenericTask
 	private function isUrlAvailable($url)
 	{
 		$roboHandler = RoboHandler::getInstance();
-		$command = 'curl  --retry 6 --retry-delay 10 --output /dev/null --silent ' . $url;
 
-		if ($roboHandler->executeCommand($command))
+		if (!$this->isWindows())
 		{
+			$command = 'curl  --retry 6 --retry-delay 10 --output /dev/null --silent ' . $url;
+
+			if ($roboHandler->executeCommand($command))
+			{
+				return true;
+			}
+		}
+		else
+		{
+			$this->printTaskSuccess('Curl is not installed on windows on default.');
+
 			return true;
 		}
 
 		return false;
+	}
+
+	/**
+	 * Check if local OS is Windows
+	 *
+	 * @return boolean
+	 * @since  __DEPLOY_VERSION__
+	 */
+	private function isWindows()
+	{
+		return strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
+	}
+
+	/**
+	 * Return the correct path for Windows
+	 *
+	 * @param   string $path - The linux path
+	 *
+	 * @return string
+	 * @since  __DEPLOY_VERSION__
+	 */
+	private function getWindowsPath($path)
+	{
+		return str_replace('/', DIRECTORY_SEPARATOR, $path);
 	}
 }
