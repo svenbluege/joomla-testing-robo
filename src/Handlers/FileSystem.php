@@ -70,7 +70,7 @@ trait FileSystem
 
 		$result = $this->taskCopyDir(
 			array(
-				src => $dest
+				'src' => $dest
 			)
 		)
 			->run();

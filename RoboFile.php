@@ -36,7 +36,7 @@ class RoboFile extends \Robo\Tasks
 	 *
 	 * @return  void
 	 *
-	 * @since   3.7.0
+	 * @since   1.0.0
 	 */
 	public function checkCodestyle($sniffersPath = null)
 	{
