@@ -9,7 +9,7 @@
  * @license    GNU General Public License version 2 or later; see LICENSE.txt
  * @see        http://robo.li/
  *
- * @since      3.7.0
+ * @since      __DEPLOY_VERSION__
  */
 
 namespace Joomla\Testing\Robo\RoboFile;
@@ -37,14 +37,14 @@ abstract class RoboFileBase extends \Robo\Tasks implements RoboFileInterface
 	 *
 	 * @var RoboFileConfiguration;
 	 *
-	 * @since  3.7.0
+	 * @since  __DEPLOY_VERSION__
 	 */
 	protected $configuration = null;
 
 	/**
 	 * RoboFile constructor.
 	 *
-	 * @since  3.7.0
+	 * @since  __DEPLOY_VERSION__
 	 */
 	public function __construct()
 	{
@@ -74,7 +74,7 @@ abstract class RoboFileBase extends \Robo\Tasks implements RoboFileInterface
 	 *
 	 * @return void
 	 *
-	 * @since   3.7.0
+	 * @since   __DEPLOY_VERSION__
 	 */
 	public function runTestPreparation(
 		$opts = array(
@@ -106,7 +106,7 @@ abstract class RoboFileBase extends \Robo\Tasks implements RoboFileInterface
 	 *
 	 * @return  void
 	 *
-	 * @since   3.7.0
+	 * @since   __DEPLOY_VERSION__
 	 */
 	public function createTestingSite($useHtAccess = false, $appendCertificatesPath = '')
 	{
@@ -165,7 +165,7 @@ abstract class RoboFileBase extends \Robo\Tasks implements RoboFileInterface
 	 *
 	 * @return void
 	 *
-	 * @since   3.7.0
+	 * @since   __DEPLOY_VERSION__
 	 */
 	public function runTests(
 		$opts = array(
@@ -193,7 +193,7 @@ abstract class RoboFileBase extends \Robo\Tasks implements RoboFileInterface
 	 *
 	 * @return void
 	 *
-	 * @since  3.7.0
+	 * @since  __DEPLOY_VERSION__
 	 */
 	public function runSelenium($debugMode = false)
 	{
@@ -217,7 +217,7 @@ abstract class RoboFileBase extends \Robo\Tasks implements RoboFileInterface
 	 *
 	 * @return  void
 	 *
-	 * @since   3.7.0
+	 * @since   __DEPLOY_VERSION__
 	 */
 	public function killSelenium()
 	{
@@ -232,7 +232,7 @@ abstract class RoboFileBase extends \Robo\Tasks implements RoboFileInterface
 	 *
 	 * @return  void
 	 *
-	 * @since   3.7.0
+	 * @since   __DEPLOY_VERSION__
 	 */
 	public function codeceptionBuild()
 	{
@@ -250,7 +250,7 @@ abstract class RoboFileBase extends \Robo\Tasks implements RoboFileInterface
 	 *
 	 * @return  void
 	 *
-	 * @since   3.7.0
+	 * @since   __DEPLOY_VERSION__
 	 */
 	public function runCodeceptionSuite($suite, $test, $debug = false, $env = '')
 	{
