@@ -198,7 +198,8 @@ abstract class RoboFileBase extends \Robo\Tasks implements RoboFileInterface
 	public function runSelenium($debugMode = false)
 	{
 		$taskSelenium = $this->taskSeleniumStandaloneServer()
-			->setBinary('vendor/bin/selenium-server-standalone')
+			->setBinary($this->configuration->getSeleniumBinary())
+			->setWebdriver($this->configuration->getSeleniumWebDriver())
 			->setLogFile('selenium.log');
 
 		if ($debugMode)

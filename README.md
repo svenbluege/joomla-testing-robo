@@ -65,10 +65,13 @@ Tasks for setting up the CMS to make it available for testing.
 * **setCmsCache($cmsCacheTime):** Sets the CMS cache time (in seconds).  Default: 86400
 * **setExecuteUser($executeUser):** Defines a user to change permissions to, if required.
 * **setCertificatesPath($path):** Defines a path with the extra certificates to be added to the Joomla install, if needed.
+* **setCMSRootFolder($path):** Defines the root path in the web server for the CMS installation, assuming it won't be executed from the server root
+* **setCMSOriginalFolder($path):** When set, instead of cloning Joomla, it copies it from the given folder.
+* **setCMSExcludeCopyFolders:** Folders that will be excluded from being copied when an original folder is provided for Joomla.
 
 #### Functions
 
-* **cloneCMSRepository()**: Clones the repository given the test folder, cache and repository details.
+* **cloneCMSRepository()**: Clones (or copies) the repository given the test folder, cache and repository details.  When a CMS original folder is given, it simply copies Joomla from it.
 * **setupCMSPath()**: Actually sets up the CMS using the cache.
 * **fixPathPermissions()**: Fixes any permission problem by setting the owner given in *setExecuteUser*.
 * **setupHtAccess()**: Sets up the .htaccess file when invoked

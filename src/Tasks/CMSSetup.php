@@ -105,13 +105,31 @@ final class CMSSetup extends GenericTask
 	private $certificatesPath = '';
 
 	/**
-	 * Root path in the web service for the CMS installation
+	 * Root path in the web server for the CMS installation
 	 *
 	 * @var    string
 	 *
 	 * @since  1.0.0
 	 */
 	private $cmsRootFolder = '';
+
+	/**
+	 * Original path where the CMS is stored to have it copied instead of cloned
+	 *
+	 * @var    string
+	 *
+	 * @since  1.0.0
+	 */
+	private $cmsOriginalFolder = '';
+
+	/**
+	 * When copying Joomla, it will exclude the given folders
+	 *
+	 * @var    array
+	 *
+	 * @since  1.0.0
+	 */
+	private $cmsExcludeCopyFolders = array();
 
 	/**
 	 * Sets the Github repository (owner/repo) with the CMS
@@ -256,6 +274,48 @@ final class CMSSetup extends GenericTask
 	}
 
 	/**
+	 * Sets the original folder of the CMS, to copy the CMS from it
+	 *
+	 * @param   string  $cmsOriginalFolder  Original folder of the CMS
+	 *
+	 * @return  $this
+	 */
+	public function setCMSOriginalFolder($cmsOriginalFolder)
+	{
+		$this->cmsOriginalFolder = $cmsOriginalFolder;
+
+		return $this;
+	}
+
+	/**
+	 * When copying Joomla, it will exclude the given folders
+	 *
+	 * @param   string|array  $cmsExcludeCopyFolders  Folders to be excluded, comma separated or array
+	 *
+	 * @return  $this
+	 */
+	public function setCMSExcludeCopyFolders($cmsExcludeCopyFolders)
+	{
+		if (!is_array($cmsExcludeCopyFolders))
+		{
+			$cmsExcludeCopyFolders = explode(',', $cmsExcludeCopyFolders);
+
+			if (!empty($cmsExcludeCopyFolders))
+			{
+				// Removes trailing spaces
+				foreach ($cmsExcludeCopyFolders as $i => $folder)
+				{
+					$cmsExcludeCopyFolders[$i] = trim($folder);
+				}
+			}
+		}
+
+		$this->cmsExcludeCopyFolders = $cmsExcludeCopyFolders;
+
+		return $this;
+	}
+
+	/**
 	 * Task for cloning the CMS repository
 	 *
 	 * @return  $this
@@ -316,7 +376,7 @@ final class CMSSetup extends GenericTask
 	}
 
 	/**
-	 * Clones the CMS repository
+	 * Clones (or copies) the CMS repository
 	 *
 	 * @return  boolean
 	 *
@@ -331,6 +391,13 @@ final class CMSSetup extends GenericTask
 			$this->printTaskError('No valid base path defined for tests');
 
 			return false;
+		}
+
+		if (!empty($this->cmsOriginalFolder) && file_exists($this->cmsOriginalFolder))
+		{
+			$this->copyCMS($this->cmsOriginalFolder, $this->cmsPath, $this->cmsExcludeCopyFolders);
+
+			return true;
 		}
 
 		$fullCachePath = $this->baseTestsPath . '/' . $this->cachePath;
@@ -623,5 +690,56 @@ final class CMSSetup extends GenericTask
 		return 'git' . $this->getGitExecutableExtension() .
 			' clone -b ' . $this->cmsBranch . ' --single-branch --depth 1 ' .
 			'https://github.com/' . $this->cmsRepository . '.git ' . $fullCachePath;
+	}
+
+	/**
+	 * Copies Joomla from one folder to another
+	 *
+	 * @param   string  $source           Source Joomla path
+	 * @param   string  $destination      Destination path for Joomla
+	 * @param   array   $excludedFolders  Folders to be excluded from being copied
+	 *
+	 * @return  boolean
+	 *
+	 * @since   1.0.0
+	 */
+	private function copyCMS($source, $destination, $excludedFolders)
+	{
+		$dir = @opendir($source);
+
+		if (false === $dir)
+		{
+			throw new Exception($this, "Cannot open Joomla source directory");
+		}
+
+		if (!is_dir($destination))
+		{
+			mkdir($destination, 0755, true);
+		}
+
+		while (false !== ($file = readdir($dir)))
+		{
+			if (in_array($file, $excludedFolders))
+			{
+				continue;
+			}
+
+			if (($file !== '.') && ($file !== '..'))
+			{
+				$srcFile  = "." . '/' . $file;
+				$destFile = $destination . '/' . $file;
+
+				if (is_dir($srcFile))
+				{
+					$this->_copyDir($srcFile, $destFile);
+				}
+				else
+				{
+					copy($srcFile, $destFile);
+				}
+			}
+		}
+
+		closedir($dir);
 	}
 }
