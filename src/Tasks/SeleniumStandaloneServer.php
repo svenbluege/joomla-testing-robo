@@ -230,6 +230,8 @@ final class SeleniumStandaloneServer extends GenericTask
 
 		$this->printTaskInfo('Executing Selenium Standalone server');
 
+		$this->printTaskInfo('Selenium bunary: ' . $this->binary);
+
 		// If no binary given, it doesn't start up the server
 		if (empty($this->binary) || !file_exists($this->binary))
 		{
