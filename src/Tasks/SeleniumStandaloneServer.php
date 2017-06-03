@@ -230,8 +230,6 @@ final class SeleniumStandaloneServer extends GenericTask
 
 		$this->printTaskInfo('Executing Selenium Standalone server');
 
-		$this->printTaskInfo('Selenium binary: ' . $this->binary);
-
 		// If no binary given, it doesn't start up the server
 		if (empty($this->binary) || !file_exists($this->binary))
 		{
@@ -254,8 +252,6 @@ final class SeleniumStandaloneServer extends GenericTask
 			$command .= ' ' . $this->getWindowsPath($this->binary) . '.jar';
 			$command .= (($this->debug) ? ' -debug' : '');
 		}
-
-		$this->printTaskInfo('Selenium full command: ' . $command);
 
 		if (!$roboHandler->executeDaemon($command))
 		{
