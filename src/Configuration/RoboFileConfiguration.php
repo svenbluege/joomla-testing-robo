@@ -74,7 +74,43 @@ class RoboFileConfiguration extends GenericConfiguration
 	protected $cmsRootFolder = '';
 
 	/**
-	 * Use an insecure connections for Curl
+	 * Original path where the CMS is stored to have it copied instead of cloned
+	 *
+	 * @var    string
+	 *
+	 * @since  1.0.0
+	 */
+	protected $cmsOriginalFolder = '';
+
+	/**
+	 * Folders to be excluded when copying Joomla
+	 *
+	 * @var    string
+	 *
+	 * @since  1.0.0
+	 */
+	protected $cmsExcludeCopyFolders = array('tests', 'tests-phpunit', '.run', '.github', '.git');
+
+	/**
+	 * Provided selenium binary
+	 *
+	 * @var    string
+	 *
+	 * @since  1.0.0
+	 */
+	protected $seleniumBinary = 'vendor/bin/selenium-server-standalone';
+
+	/**
+	 * Selenium web driver to be used
+	 *
+	 * @var    string
+	 *
+	 * @since  1.0.0
+	 */
+	protected $seleniumWebDriver = '';
+
+	/**
+	 * Use an insecure connection for Curl
 	 *
 	 * @var    boolean
 	 *
