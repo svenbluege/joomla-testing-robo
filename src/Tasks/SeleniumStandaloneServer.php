@@ -253,8 +253,6 @@ final class SeleniumStandaloneServer extends GenericTask
 			$command .= (($this->debug) ? ' -debug' : '');
 		}
 
-		$this->printTaskInfo('Selenium full command: ' . $command);
-
 		if (!$roboHandler->executeDaemon($command))
 		{
 			$this->printTaskError('Selenium server execution failed');
