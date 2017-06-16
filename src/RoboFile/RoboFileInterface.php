@@ -43,4 +43,25 @@ interface RoboFileInterface
 	 * @since   3.7.0
 	 */
 	public function prepareTestingPackage($params = array('dev' => false));
+	/**
+	 * Function for actual execution of a individual test of this extension
+	 *
+	 * @param   array  $opts  Array of configuration options:
+	 *                        - 'env': set a specific environment to get configuration from
+	 *                        - 'debug': executes codeception tasks with extended debug
+	 * 						  - 'suite':
+	 * 						  - 'test': example: 'install/InstallWeblinksCest.php/installWeblinks'
+	 *
+	 * @return void
+	 *
+	 * @since   x.x.x
+	 */
+	public function runTestSingle(
+		$opts = array(
+			'env' => 'desktop',
+			'debug' => false,
+			'suite' => 'acceptance',
+			'test' => 'install'
+		)
+	);
 }

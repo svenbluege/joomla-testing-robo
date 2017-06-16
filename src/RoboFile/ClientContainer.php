@@ -33,7 +33,10 @@ trait ClientContainer
 	public function runContainerTests(
 		$opts = array(
 			'env' => 'desktop',
-			'debug' => false
+			'debug' => false,
+			'single' => false,
+			'suite' => 'acceptance',
+			'test' => 'install'
 		)
 	)
 	{
@@ -42,7 +45,16 @@ trait ClientContainer
 		$opts['install-test'] = '';
 
 		$this->runContainerTestPreparation($opts);
-		$this->runTestSuites($opts);
+
+		if ($opts['single'])
+		{
+			$this->runTestSingle($opts);
+		}
+		else
+		{
+			$this->runTestSuites($opts);
+		}
+
 	}
 
 	/**
