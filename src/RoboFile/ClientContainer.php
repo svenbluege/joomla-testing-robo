@@ -36,7 +36,8 @@ trait ClientContainer
 			'debug' => false,
 			'single' => false,
 			'suite' => 'acceptance',
-			'test' => 'install'
+			'test' => 'install',
+			'server' => 'php'
 		)
 	)
 	{

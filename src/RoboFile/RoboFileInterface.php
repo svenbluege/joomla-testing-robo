@@ -61,7 +61,8 @@ interface RoboFileInterface
 			'env' => 'desktop',
 			'debug' => false,
 			'suite' => 'acceptance',
-			'test' => 'install'
+			'test' => 'install',
+			'server' => 'php'
 		)
 	);
 }
