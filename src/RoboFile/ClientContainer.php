@@ -33,11 +33,7 @@ trait ClientContainer
 	public function runContainerTests(
 		$opts = array(
 			'env' => 'desktop',
-			'debug' => false,
-			'single' => false,
-			'suite' => 'acceptance',
-			'test' => 'install',
-			'server' => 'php'
+			'debug' => false
 		)
 	)
 	{
@@ -47,14 +43,22 @@ trait ClientContainer
 
 		$this->runContainerTestPreparation($opts);
 
-		if ($opts['single'])
-		{
-			$this->runTestSingle($opts);
-		}
-		else
-		{
-			$this->runTestSuites($opts);
-		}
+		$this->runTestSuites($opts);
+
+	}
+
+	public function runContainerTest(
+		$opts = array(
+			'env' => 'desktop',
+			'debug' => false,
+			'single' => false,
+			'suite' => 'acceptance',
+			'test' => 'install',
+			'server' => 'php'
+		)
+	)
+	{
+		$this->runTestSingle($opts);
 
 	}
 
