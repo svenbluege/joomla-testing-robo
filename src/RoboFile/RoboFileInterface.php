@@ -43,5 +43,4 @@ interface RoboFileInterface
 	 * @since   3.7.0
 	 */
 	public function prepareTestingPackage($params = array('dev' => false));
-
 }
