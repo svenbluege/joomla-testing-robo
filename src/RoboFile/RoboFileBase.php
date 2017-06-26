@@ -274,4 +274,48 @@ abstract class RoboFileBase extends \Robo\Tasks implements RoboFileInterface
 			->run()
 			->stopOnFail();
 	}
+
+	/**
+	 * Function for actual execution of a individual test of this extension
+	 *
+	 * @param   array  $opts  Array of configuration options:
+	 *                        - 'env': set a specific environment to get configuration from
+	 *                        - 'debug': executes codeception tasks with extended debug
+	 * 						  - 'suite':
+	 * 						  - 'test': example: 'install/InstallWeblinksCest.php/installWeblinks'
+	 *
+	 * @return void
+	 *
+	 * @since   x.x.x
+	 */
+	public function runTestSingle(
+		$opts = array(
+			'env' => 'desktop',
+			'debug' => false,
+			'suite' => 'acceptance',
+			'test' => 'install',
+			'server' => 'php'
+		)
+	)
+	{
+		$templateFile = JPATH_TESTING_BASE . "/acceptance.suite.container.yml";
+		$resultFile = JPATH_TESTING_BASE . "/acceptance.suite.yml";
+		$initialSuite = fopen($templateFile, "r") or die("Unable to open file!");
+		$txt = fread($initialSuite, filesize($templateFile));
+		fclose($initialSuite);
+
+		$finalSuite = fopen($resultFile, "w") or die("Unable to open file!");
+		$txt = str_replace("###", $opts['server'], $txt);
+		fwrite($finalSuite, $txt);
+		fclose($finalSuite);
+
+		$this->runCodeceptionSuite(
+			$opts['suite'],
+			$opts['test'],
+			$opts['debug'],
+			$opts['env']
+		);
+	}
 }
+
+
