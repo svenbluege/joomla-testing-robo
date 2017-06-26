@@ -47,6 +47,19 @@ trait ClientContainer
 
 	}
 
+	/**
+	 * Run a single test script for this extension in a container environment
+	 *
+	 * @param   array  $opts  Array of configuration options:
+	 *  					  - 'env': set a specific environment to get configuration from
+	 *                        - 'debug': executes codeception tasks with extended debug
+	 * 						  - 'suite': the suite of the test
+	 * 						  - 'test': example: 'install/InstallWeblinksCest.php/installWeblinks'
+	 * 						  - 'server': the container name on which the tests are run
+	 * @return void
+	 *
+	 * @since   3.7.0
+	 */
 	public function runContainerTest(
 		$opts = array(
 			'env' => 'desktop',

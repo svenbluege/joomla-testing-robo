@@ -55,6 +55,11 @@ class RoboFile extends \Robo\Tasks
 					'src'
 				)
 			)
+			->setCodeStyleExcludedPaths(
+				array(
+					'src/Tasks/loadTasks.php'
+				)
+			)
 			->checkCodeStyle()
 			->run()
 			->stopOnFail();

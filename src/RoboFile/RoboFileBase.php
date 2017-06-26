@@ -281,8 +281,9 @@ abstract class RoboFileBase extends \Robo\Tasks implements RoboFileInterface
 	 * @param   array  $opts  Array of configuration options:
 	 *                        - 'env': set a specific environment to get configuration from
 	 *                        - 'debug': executes codeception tasks with extended debug
-	 * 						  - 'suite':
+	 * 						  - 'suite': the suite of the test
 	 * 						  - 'test': example: 'install/InstallWeblinksCest.php/installWeblinks'
+	 * 						  - 'server': the container name on which the tests are run
 	 *
 	 * @return void
 	 *

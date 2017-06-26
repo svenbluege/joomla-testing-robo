@@ -17,7 +17,7 @@ namespace Joomla\Testing\Robo\Tasks;
  *
  * @since       1.0.0
  */
-trait LoadTasks
+trait loadTasks
 {
 	/**
 	 * Selenium tasks
