@@ -71,8 +71,23 @@ trait ClientContainer
 		)
 	)
 	{
-		$this->runTestSingle($opts);
+		$templateFile = JPATH_TESTING_BASE . "/acceptance.suite.container.yml";
+		$resultFile = JPATH_TESTING_BASE . "/acceptance.suite.yml";
+		$initialSuite = fopen($templateFile, "r") or die("Unable to open file!");
+		$txt = fread($initialSuite, filesize($templateFile));
+		fclose($initialSuite);
 
+		$finalSuite = fopen($resultFile, "w") or die("Unable to open file!");
+		$txt = str_replace("###", $opts['server'], $txt);
+		fwrite($finalSuite, $txt);
+		fclose($finalSuite);
+
+		$this->runCodeceptionSuite(
+			$opts['suite'],
+			$opts['test'],
+			$opts['debug'],
+			$opts['env']
+		);
 	}
 
 	/**
