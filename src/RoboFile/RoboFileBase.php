@@ -15,7 +15,7 @@
 namespace Joomla\Testing\Robo\RoboFile;
 
 use Joomla\Testing\Robo\Configuration\RoboFileConfiguration;
-use Joomla\Testing\Robo\Tasks\loadTasks;
+use Joomla\Testing\Robo\Tasks\LoadTasks;
 
 /**
  * Base Robo File for extension testing
@@ -30,7 +30,7 @@ abstract class RoboFileBase extends \Robo\Tasks implements RoboFileInterface
 	use ClientContainer;
 
 	// Load tasks from composer, see composer.json
-	use loadTasks;
+	use LoadTasks;
 
 	/**
 	 * Configuration of this test script
@@ -275,3 +275,5 @@ abstract class RoboFileBase extends \Robo\Tasks implements RoboFileInterface
 			->stopOnFail();
 	}
 }
+
+

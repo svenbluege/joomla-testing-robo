@@ -42,7 +42,52 @@ trait ClientContainer
 		$opts['install-test'] = '';
 
 		$this->runContainerTestPreparation($opts);
+
 		$this->runTestSuites($opts);
+
+	}
+
+	/**
+	 * Run a single test script for this extension in a container environment
+	 *
+	 * @param   array  $opts  Array of configuration options:
+	 *  					  - 'env': set a specific environment to get configuration from
+	 *                        - 'debug': executes codeception tasks with extended debug
+	 * 						  - 'suite': the suite of the test
+	 * 						  - 'test': example: 'install/InstallWeblinksCest.php/installWeblinks'
+	 * 						  - 'server': the container name on which the tests are run
+	 * @return void
+	 *
+	 * @since   3.7.0
+	 */
+	public function runContainerTest(
+		$opts = array(
+			'env' => 'desktop',
+			'debug' => false,
+			'single' => false,
+			'suite' => 'acceptance',
+			'test' => 'install',
+			'server' => 'php'
+		)
+	)
+	{
+		$templateFile = JPATH_TESTING_BASE . "/acceptance.suite.container.yml";
+		$resultFile = JPATH_TESTING_BASE . "/acceptance.suite.yml";
+		$initialSuite = fopen($templateFile, "r") or die("Unable to open file!");
+		$txt = fread($initialSuite, filesize($templateFile));
+		fclose($initialSuite);
+
+		$finalSuite = fopen($resultFile, "w") or die("Unable to open file!");
+		$txt = str_replace("###", $opts['server'], $txt);
+		fwrite($finalSuite, $txt);
+		fclose($finalSuite);
+
+		$this->runCodeceptionSuite(
+			$opts['suite'],
+			$opts['test'],
+			$opts['debug'],
+			$opts['env']
+		);
 	}
 
 	/**

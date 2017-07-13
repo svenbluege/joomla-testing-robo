@@ -741,5 +741,7 @@ final class CMSSetup extends GenericTask
 		}
 
 		closedir($dir);
+
+		return true;
 	}
 }

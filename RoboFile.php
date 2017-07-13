@@ -27,7 +27,7 @@ define('JPATH_TESTING_BASE', __DIR__);
  */
 class RoboFile extends \Robo\Tasks
 {
-	use Joomla\Testing\Robo\Tasks\loadTasks;
+	use Joomla\Testing\Robo\Tasks\LoadTasks;
 
 	/**
 	 * Check the code style of the project against a passed sniffers using PHP_CodeSniffer_CLI
