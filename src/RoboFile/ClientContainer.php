@@ -66,7 +66,6 @@ trait ClientContainer
 			'debug' => false,
 			'suite' => 'acceptance',
 			'test' => 'install',
-			'server' => 'php',
 			'config' => ''
 		)
 	)
