@@ -248,15 +248,21 @@ abstract class RoboFileBase extends \Robo\Tasks implements RoboFileInterface
 	 * @param   string  $test   Codeception test to run
 	 * @param   bool    $debug  Execute codeception with debug options
 	 * @param   string  $env    Set a specific environment to get configuration from
+	 * @param   string  $config Special configuration
 	 *
 	 * @return  void
 	 *
 	 * @since   __DEPLOY_VERSION__
 	 */
-	public function runCodeceptionSuite($suite, $test, $debug = false, $env = '')
+	public function runCodeceptionSuite($suite, $test, $debug = false, $env = '', $config = '')
 	{
 		$codeceptionTask = $this->taskCodecept()
 			->arg('--fail-fast');
+
+		if (!empty($config))
+		{
+			$codeceptionTask->rawArg($config);
+		}
 
 		if ($debug)
 		{
