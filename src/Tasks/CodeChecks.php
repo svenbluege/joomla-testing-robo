@@ -247,9 +247,9 @@ final class CodeChecks extends GenericTask
 	/**
 	 * Set the folders to perform the code style check in
 	 *
-	 * @param   string  $codeStyleCheckFolders  Folders to perform the code style check in
+	 * @param   string|array  $codeStyleCheckFolders  Folders to perform the code style check in
 	 *
-	 * @return $this
+	 * @return  $this
 	 *
 	 * @since   1.0.0
 	 */
