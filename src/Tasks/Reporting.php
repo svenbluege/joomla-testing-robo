@@ -9,6 +9,9 @@
 
 namespace Joomla\Testing\Robo\Tasks;
 
+use Cloudinary\Uploader;
+use Github\Client;
+
 /**
  * Class for reporting tests results
  *
@@ -101,13 +104,13 @@ final class Reporting extends GenericTask
 	private $folderImagesToUpload = '';
 
 	/**
-	 * Comment body to include into Github
+	 * Tap log to report
 	 *
 	 * @var     string
 	 *
 	 * @since   1.0.0
 	 */
-	private $githubCommentBody = '';
+	private $tapLog = '';
 
 	/**
 	 * Uploaded images (URL)
@@ -117,6 +120,33 @@ final class Reporting extends GenericTask
 	 * @since   1.0.0
 	 */
 	private $uploadedImagesURLs = array();
+
+	/**
+	 * Build URL
+	 *
+	 * @var     string
+	 *
+	 * @since   1.0.0
+	 */
+	private $buildURL = '';
+
+	/**
+	 * Slack Webhook
+	 *
+	 * @var     string
+	 *
+	 * @since   1.0.0
+	 */
+	private $slackWebhook = '';
+
+	/**
+	 * Slack channel
+	 *
+	 * @var     string
+	 *
+	 * @since   1.0.0
+	 */
+	private $slackChannel = '';
 
 	/**
 	 * Sets the Cloudinary service cloud name
@@ -256,15 +286,33 @@ final class Reporting extends GenericTask
 	/**
 	 * Sets the comment body to include into Github
 	 *
-	 * @param   string  $githubCommentBody  Comment body to include into Github
+	 * @param   string  $tapLog  Tap log to report back
+	 *
+	 * @return  $this
+	 *
+	 * @since   1.0.0
+	 *
+	 * @deprecated  Use setTapLog instead
+	 */
+	public function setGithubCommentBody($tapLog)
+	{
+		$this->tapLog = $tapLog;
+
+		return $this;
+	}
+
+	/**
+	 * Sets the tap log to report back
+	 *
+	 * @param   string  $tapLog  Tap log to report back
 	 *
 	 * @return  $this
 	 *
 	 * @since   1.0.0
 	 */
-	public function setGithubCommentBody($githubCommentBody)
+	public function setTapLog($tapLog)
 	{
-		$this->githubCommentBody = $githubCommentBody;
+		$this->tapLog = $tapLog;
 
 		return $this;
 	}
@@ -293,6 +341,54 @@ final class Reporting extends GenericTask
 	}
 
 	/**
+	 * Sets the build URL
+	 *
+	 * @param   string  $buildURL  Build URL to report back
+	 *
+	 * @return  $this
+	 *
+	 * @since   1.0.0
+	 */
+	public function setBuildURL($buildURL)
+	{
+		$this->buildURL = $buildURL;
+
+		return $this;
+	}
+
+	/**
+	 * Sets the Slack webhook URL
+	 *
+	 * @param   string  $slackWebhook  Slack webhook URL
+	 *
+	 * @return  $this
+	 *
+	 * @since   1.0.0
+	 */
+	public function setSlackWebhook($slackWebhook)
+	{
+		$this->slackWebhook = $slackWebhook;
+
+		return $this;
+	}
+
+	/**
+	 * Sets the Slack channel to report back
+	 *
+	 * @param   string  $slackChannel  Slack channel
+	 *
+	 * @return  $this
+	 *
+	 * @since   1.0.0
+	 */
+	public function setSlackChannel($slackChannel)
+	{
+		$this->slackChannel = $slackChannel;
+
+		return $this;
+	}
+
+	/**
 	 * Task to publish the reported images to Cloudinary and store the URLs
 	 *
 	 * @return  $this
@@ -314,6 +410,18 @@ final class Reporting extends GenericTask
 	public function publishGithubCommentToPR()
 	{
 		return $this->setupTask('publishGithubCommentToPR');
+	}
+
+	/**
+	 * Task to publish the build report to Slack
+	 *
+	 * @return  $this
+	 *
+	 * @since   1.0.0
+	 */
+	public function publishBuildReportToSlack()
+	{
+		return $this->setupTask('publishBuildReportToSlack');
 	}
 
 	/**
@@ -380,7 +488,7 @@ final class Reporting extends GenericTask
 
 		foreach ($imagesToUpload as $image)
 		{
-			$result = \Cloudinary\Uploader::upload(realpath($image));
+			$result = Uploader::upload(realpath($image));
 
 			if (isset($result['error']))
 			{
@@ -416,14 +524,14 @@ final class Reporting extends GenericTask
 			return false;
 		}
 
-		if (empty($this->githubCommentBody))
+		if (empty($this->tapLog))
 		{
-			$this->printTaskError('Github comment body was not provided');
+			$this->printTaskError('Tap error was not provided');
 
 			return false;
 		}
 
-		$commentBody = $this->githubCommentBody;
+		$commentBody = $this->tapLog;
 
 		// If an image URL exists, it's attached to the comment body
 		if (!empty($this->uploadedImagesURLs))
@@ -439,8 +547,8 @@ final class Reporting extends GenericTask
 
 		try
 		{
-			$github = new \Github\Client;
-			$github->authenticate($this->githubToken, \Github\Client::AUTH_HTTP_TOKEN);
+			$github = new Client;
+			$github->authenticate($this->githubToken, Client::AUTH_HTTP_TOKEN);
 			$github
 				->api('issue')
 				->comments()->create(
@@ -453,6 +561,112 @@ final class Reporting extends GenericTask
 		catch (\Exception $e)
 		{
 			$this->printTaskError('Github comment could not be added due to an error: ' . $e->getMessage());
+
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Sends the build report to Slack, using the tap log and images
+	 *
+	 * @return  boolean
+	 *
+	 * @since   1.0.0
+	 */
+	protected function publishBuildReportToSlackExecute()
+	{
+		$this->printTaskInfo('Sending build report to Slack');
+
+		$repoMatches = array();
+
+		if (empty($this->githubRepo) || !preg_match('/([0-9a-z_-]+)\/([0-9a-z_-]+)/i', $this->githubRepo, $repoMatches)
+			|| !$this->githubPR)
+		{
+			$this->printTaskError('Valid Github repository and pull request number were not provided');
+
+			return false;
+		}
+
+		if (empty($this->tapLog))
+		{
+			$this->printTaskError('Tap error was not provided');
+
+			return false;
+		}
+
+		if (empty($this->slackWebhook) || empty($this->slackChannel))
+		{
+			$this->printTaskError('Slack webhook URL or channel were not provided');
+
+			return false;
+		}
+
+		$repositoryName = $repoMatches[2];
+		$reportedRepository = 'https://github.com/' . $this->githubRepo;
+		$reportedPR = $reportedRepository . '/pull/' . $this->githubPR;
+		$reportedImage = '';
+		$reportedError = 'Automated testing error in ' . $repositoryName . ' - Pull Request #' . $this->githubPR;
+
+		if (!empty($this->uploadedImagesURLs))
+		{
+			$reportedImage = $this->uploadedImagesURLs[0];
+		}
+
+		try
+		{
+			$slackClient = new \GuzzleHttp\Client;
+
+			$attachment = array(
+				'fallback' => $reportedError,
+				'text' => 'Error details',
+				'color' => 'danger',
+				'fields' => array(
+					array(
+						'title' => 'Repository',
+						'value' => $reportedRepository
+					),
+					array(
+						'title' => 'Pull Request',
+						'value' => $reportedPR
+					),
+					array(
+						'title' => 'Codeception tap log',
+						'value' => $this->tapLog
+					)
+				)
+			);
+
+			if (!empty($this->buildURL))
+			{
+				$attachment['fields'][] = array(
+					'title' => 'Build URL',
+					'value' => $this->buildURL
+				);
+			}
+
+			if (!empty($reportedImage))
+			{
+				$attachment['image_url'] = $reportedImage;
+				$attachment['thumb_url'] = $reportedImage;
+			}
+
+			$message = array(
+				'text' => $reportedError,
+				'channel' => $this->slackChannel,
+				'attachments' => array($attachment)
+			);
+
+			$slackClient->request('POST', $this->slackWebhook,
+				array(
+					'body' => json_encode($message)
+				)
+			);
+		}
+		catch (\Exception $e)
+		{
+			$this->printTaskError('Slack build report could not be done due to an error: ' . $e->getMessage());
 
 			return false;
 		}
