@@ -23,6 +23,8 @@ use Joomla\Testing\Robo\Handlers\RoboHandler;
  */
 final class SeleniumStandaloneServer extends GenericTask
 {
+	use Traits\OS;
+
 	/**
 	 * Human readable name of the task
 	 *
@@ -76,6 +78,15 @@ final class SeleniumStandaloneServer extends GenericTask
 	 * @since 1.0.0
 	 */
 	private $timeOut = 60;
+
+	/**
+	 * The name of the webdriver to use in the tests
+	 *
+	 * @var string
+	 *
+	 * @since 1.1.0
+	 */
+	private $webdriver = '';
 
 	/**
 	 * Set Selenium URL
@@ -158,6 +169,22 @@ final class SeleniumStandaloneServer extends GenericTask
 	}
 
 	/**
+	 * Set Selenium Binary
+	 *
+	 * @param   string  $name  The name of the webdriver to use the tests
+	 *
+	 * @return  $this
+	 *
+	 * @since   1.1.0
+	 */
+	public function setWebdriver($name)
+	{
+		$this->webdriver = $name;
+
+		return $this;
+	}
+
+	/**
 	 * Sets a task for running the selenium server
 	 *
 	 * @return  $this
@@ -214,9 +241,18 @@ final class SeleniumStandaloneServer extends GenericTask
 			return false;
 		}
 
-		$command = $this->binary;
-		$command .= (($this->debug) ? ' -debug' : '');
-		$command .= (!empty($this->logFile)) ? ' >> ' . $this->logFile . ' 2>&1' : '';
+		if (!$this->isWindows())
+		{
+			$command = $this->binary;
+			$command .= ((empty($this->webdriver)) ? '' : ' ' . $this->webdriver);
+			$command .= (($this->debug) ? ' -debug' : '');
+			$command .= (!empty($this->logFile)) ? ' >> ' . $this->logFile . ' 2>&1' : '';
+		}
+		else
+		{
+			// TODO: Windows support using joomla-projects/selenium-server-standalone?
+			return true;
+		}
 
 		if (!$roboHandler->executeDaemon($command))
 		{
