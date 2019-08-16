@@ -13,13 +13,14 @@ All the included commands have setters and actual functions to be executed (usin
 
 Allows executing tasks related to a Selenium Server (not included) 
 
-####Setters:
+#### Setters:
 
 * **setBinary($binary):** sets the location of the Selenium Server binary file.  Default: *vendor/bin/selenium-server-standalone*
 * **setURL($url):** sets the URL of the Selenium Server.  Default: *http://localhost:4444*
 * **setDebug($debug = true):** Sets *-debug* option for Selenium server when set to true
 * **setLogFile($logFile):** Defines a single log file for the Selenium server execution.  Default: *selenium.log*
 * **setTimeOut($seconds):** Sets a timeout to wait for the server to actually run when it's executed.  Default: *60*
+* **setWebdriver($name):** Allows setting a named webdriver to run the selenium tests on
 
 #### Functions
 
