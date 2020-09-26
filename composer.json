@@ -16,10 +16,10 @@
   },
   "require": {
     "php"                       : ">=5.4.0",
-    "consolidation/robo"        : "~1",
-    "squizlabs/php_codesniffer" : "~1",
-    "cloudinary/cloudinary_php" : "~1",
-    "knplabs/github-api"        : "~1"
+    "consolidation/robo"        : "2.2.1",
+    "squizlabs/php_codesniffer" : "3.5.6",
+    "cloudinary/cloudinary_php" : "1.18.0",
+    "knplabs/github-api"        : "^1.7.1"
   },
   "replace": {
     "joomla-projects/robo": "< 1.0"
