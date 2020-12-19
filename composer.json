@@ -23,6 +23,6 @@
     "knplabs/github-api"        : "^1.7.1"
   },
   "replace": {
-    "joomla-projects/robo": "< 1.0"
+
   }
 }
